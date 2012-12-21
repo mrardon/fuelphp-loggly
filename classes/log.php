@@ -82,22 +82,13 @@ class Log extends \Fuel\Core\Log
 
     $json = json_encode($message);
 
-    $params = array(
-    ); // header params
-
-    $options = array(
-      'HTTPHEADER' => array('Content-Type' => 'application/json'),
-      'POSTFIELDS' => $json,
-    ); // curl options
-
-    $response = \Request::forge(
-     $url,
-     array(
-     'driver' => 'curl',
-     'params' => $params,
-     'options' => $options),
-     'POST' // the method, GET, POST, etc.
-    );
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);  // DO NOT RETURN HTTP HEADERS
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type' => 'application/json'));
+    $response = curl_exec($ch);
 
     //die(var_dump($response));
 
