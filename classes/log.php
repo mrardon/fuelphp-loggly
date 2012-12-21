@@ -24,6 +24,9 @@ class Log extends \Fuel\Core\Log
    */
   public static function write($level, $msg, $method = null)
   {
+    if (null === \Config::get('loggly.input_key'))
+      return parent::write($level, $msg, $method);
+
     // defined default error labels
     static $labels = array(
       1  => 'Error',
