@@ -91,6 +91,7 @@ class Log extends \Fuel\Core\Log
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($ch, CURLOPT_HEADER, 0);  // DO NOT RETURN HTTP HEADERS
     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type' => 'application/json'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     $response = curl_exec($ch);
 
     //die(var_dump($response));
